@@ -29,38 +29,38 @@ void Route::setNumberOfRoute(int numberOfRoute) {
 }
 
 std::ostream &operator<<(std::ostream &os, const Route &route) {
-    os << "\nstartPointOfTheRoute: " << route.startPointOfTheRoute << "\nfinalPointOfTheRoute: "
-       << route.finalPointOfTheRoute << "\nnumberOfRoute: " << route.numberOfRoute << "\n\n";
+    os << "Начальная точка маршрута: " << route.startPointOfTheRoute << "\nКонечная точка маршрута: "
+       << route.finalPointOfTheRoute << "\nНомер маршрута: " << route.numberOfRoute << "\n\n";
     return os;
 }
 
 std::istream& operator>> (std::istream& is, Route &route) {
-    std::cout << "Название начального пункта маршрута:\n";
+    std::cout << "Название начального пункта маршрута\n";
     route.setStartPointOfTheRoute(input<std::string>());
 
-    std::cout << "Название конечного пункта маршрута:\n";
+    std::cout << "Название конечного пункта маршрута\n";
     route.setFinalPointOfTheRoute(input<std::string>());
 
-    std::cout << "Номер маршрута:\n";
+    std::cout << "Номер маршрута\n";
     route.setNumberOfRoute(input<int>());
 
     return is;
 }
 
 Route::Route() {
-    std::cout << "Вызван конструктор без параметров класса Route\n";
+    std::cout << "<<Вызван конструктор без параметров класса Route>>\n\n";
     startPointOfTheRoute = "";
     finalPointOfTheRoute = "";
     numberOfRoute = 0;
 }
 
 Route::Route(const std::string& startPointOfTheRoute, const std::string& finalPointOfTheRoute, int numberOfRoute) {
-    std::cout << "Вызван конструктор с параметрами класса Route\n";
+    std::cout << "<<Вызван конструктор с параметрами класса Route>>\n\n";
     this->startPointOfTheRoute = startPointOfTheRoute;
     this->finalPointOfTheRoute = finalPointOfTheRoute;
     this->numberOfRoute = numberOfRoute;
 }
 
 Route::~Route() {
-    std::cout << "Вызван деструктор класса Route\n";
+    std::cout << "<<Вызван деструктор класса Route>>\n\n";
 };

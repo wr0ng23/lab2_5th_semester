@@ -15,8 +15,6 @@ private:
 public:
     explicit MyException(const std::string& error);
 
-    [[nodiscard]] bool is_critical_error() const;
-
     [[nodiscard]] std::string get_error() const;
 };
 

@@ -7,6 +7,7 @@
 
 #include "Element.h"
 #include "../MyException.h"
+#include "../checkingAccuracyOfTheInput.h"
 
 class List {
 private:
@@ -31,7 +32,7 @@ public:
 
     void displayElementByNumberOfRoute(int searchedNumberOfRoute) const;
 
-    void editElementByIndex(Route *route, int index);
+    void editElementByIndex(int index);
 
     void deleteElementFromBegin();
 
@@ -47,7 +48,7 @@ public:
 
     [[nodiscard]] bool isEmpty() const;
 
-    void displayList() const;
+    void displayList();
 };
 
 

@@ -1,11 +1,10 @@
 #include <windows.h>
-#include "firstEx/List.h"
-#include "secondEx/TextAnalysis.h"
+#include "Menu.h"
 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
-    TextAnalysis::readFromConsole();
-    system("pause");
+    Menu* menu = new Menu;
+    menu->startProgram();
 
     return 0;
 }

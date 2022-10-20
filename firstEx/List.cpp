@@ -30,9 +30,7 @@ void List::addElementByIndex(Route *route, int index) {
 
     searchedElement->prev = newElement; // установка указателя на новый элемент у предыдщего узла с этим индексом
     newElement->next = searchedElement; // обновление указателя на следующий элемент у добавленного элемента
-    std::cout << "Элемент добавлен в список по индексу " << index << "\n";
-    ++size;
-    bubbleSort();
+    std::cout << "Маршрут добавлен в список по индексу " << index + 1 << ", всего маршрутов: " << ++size << "\n\n";
 }
 
 void List::addElementToBegin(Route *route) {
@@ -48,8 +46,7 @@ void List::addElementToBegin(Route *route) {
 
     first = newELement;
     ++size;
-    std::cout << "Маршрут доавблен в начало списка, размер списка: " << size << "\n";
-    bubbleSort();
+    std::cout << "Маршрут добавлен в начало списка, всего маршрутов: " << size << "\n\n";
 }
 
 void List::addElementToEnd(Route *route) {
@@ -64,17 +61,19 @@ void List::addElementToEnd(Route *route) {
     }
     last = newElement;
     ++size;
-    std::cout << "Маршрут добавлен в список, размер списка: " << size << "\n";
-    bubbleSort();
+    std::cout << "Маршрут добавлен в конец списка, всего маршрутов: " << size << "\n\n";
 }
 
-void List::displayList() const {
+void List::displayList() {
     if (size == 0) {
-        throw MyException("Нет элементов в списке!\n");
+        throw MyException("Нет маршрутов в списке!\n");
     }
 
+    bubbleSort();
     Element *temp = first;
+    int counterOfRoutes = 1;
     while (temp) {
+        std::cout << counterOfRoutes++ << ")\n";
         std::cout << *(temp->route);
         temp = temp->next;
     }
@@ -102,7 +101,7 @@ bool List::isEmpty() const {
 
 void List::deleteElementFromBegin() {
     if (isEmpty()) {
-        throw MyException("Нет элементов в списке!\n");
+        throw MyException("Нет маршрутов в списке!\n");
     }
 
     Element *newFirstElement = first->next;
@@ -110,7 +109,7 @@ void List::deleteElementFromBegin() {
         newFirstElement->prev = nullptr;
     }
 
-    std::cout << "Элемент " << *(first->route) << "^^^Успешно удален из начала списка!^^^\n";
+    std::cout << "Маршрут удален из начала списка!\n\n";
     delete first;
     first = newFirstElement;
     --size;
@@ -118,7 +117,7 @@ void List::deleteElementFromBegin() {
 
 void List::deleteElementFromEnd() {
     if (isEmpty()) {
-        throw MyException("Нет элементов в списке!\n");
+        throw MyException("Нет маршрутов в списке!\n");
     }
 
     Element *prevElementBeforeLast = last->prev;
@@ -126,13 +125,17 @@ void List::deleteElementFromEnd() {
         prevElementBeforeLast->next = nullptr;
     }
 
-    std::cout << "Элемент " << *(last->route) << "^^^Успешно удален из конца списка!^^^\n";
+    std::cout << "Маршрут удален из конца списка!\n\n";
     delete last;
     last = prevElementBeforeLast;
     --size;
 }
 
 void List::deleteElementByIndex(int index) {
+    if (isEmpty()) {
+        throw MyException("Нет маршрутов в списке!\n");
+    }
+
     if (isIndexIncorrect(index)) {
         throw MyException("Введен некорректный индекс!\n");
     }
@@ -155,20 +158,48 @@ void List::deleteElementByIndex(int index) {
     nextElement->prev = prevElement;
     delete searchedElement;
 
-    std::cout << "Элемент по индексу " << index << " удален!\n";
+    std::cout << "Маршрут по индексу " << index + 1 << " удален!\n\n";
     --size;
 }
 
-void List::editElementByIndex(Route *route, int index) {
+void List::editElementByIndex(int index) {
     if (isIndexIncorrect(index)) {
         throw MyException("Введен некорректный индекс!\n");
     }
 
-    Element *searchedElement = searchingForElementByIndex(index);
+    Element *searchedElement;
 
-    delete searchedElement->route;
-    searchedElement->route = route;
-    std::cout << "Информация обновлена!\n";
+    if (index == 0) searchedElement = first;
+    else if (index == size - 1) searchedElement = last;
+    else searchedElement = searchingForElementByIndex(index);
+
+    while (true) {
+        system("cls");
+        std::cout << *(searchedElement->route);
+        std::cout << "Какую информацию о маршруте вы хотите изменить?\n"
+                  << "1) Начальную точку маршрута\n"
+                  << "2) Конечную точку маршрута\n"
+                  << "3) Номер маршрута\n";
+
+        int answer = checking_accuracy_of_the_input(1, 3);
+        if (answer == 1) {
+            std::cout << "Введите начальную точку маршрута\n";
+            std::string startPointOfTheRoute = input<std::string>();
+            searchedElement->route->setStartPointOfTheRoute(startPointOfTheRoute);
+        } else if (answer == 2) {
+            std::cout << "Введите конечную точку маршрута\n";
+            std::string finalPointOfTheRoute = input<std::string>();
+            searchedElement->route->setFinalPointOfTheRoute(finalPointOfTheRoute);
+        } else {
+            std::cout << "Введите номер маршрута\n";
+            int numberOfRoute = input<int>();
+            searchedElement->route->setNumberOfRoute(numberOfRoute);
+        }
+        std::cout << "Информация о маршруте обновлена!\n";
+        std::cout << "Желаете ли изменить еще какую-то информацию о данном маршруте?(1 - да, 2 - нет)\n";
+        int answer1 = checking_accuracy_of_the_input(1, 2);
+        if (answer1 == 2) break;
+    }
 }
 
 Element *List::searchingForElementByIndex(int index) const {
@@ -217,11 +248,15 @@ void List::bubbleSort() {
 }
 
 void List::displayElementByNumberOfRoute(int searchedNumberOfRoute) const {
+    if (isEmpty()) {
+        throw MyException("Нет маршрутов в списке!\n");
+    }
+
     Element *searchedElement = first;
     for (int i = 0; i < size; i++) {
         Route* currentRoute = searchedElement->route;
         if (currentRoute->getNumberOfRoute() == searchedNumberOfRoute) {
-            std::cout << "Искомый маршрут:\n" << *currentRoute;
+            std::cout << "\nИскомый маршрут:\n" << *currentRoute;
             return;
         }
         searchedElement = searchedElement->next;

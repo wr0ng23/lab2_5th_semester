@@ -4,24 +4,6 @@
 
 #include "TextAnalysis.h"
 
-bool TextAnalysis::isVowel(char c) {
-    switch (c) {
-        case 'a':
-        case 'A':
-        case 'e':
-        case 'E':
-        case 'i':
-        case 'I':
-        case 'o':
-        case 'O':
-        case 'u':
-        case 'U':
-            return true;
-        default:
-            return false;
-    }
-}
-
 /*bool TextAnalysis::isPunctuationMark(char c) {
     switch (c) {
         case ',':
@@ -44,21 +26,34 @@ bool TextAnalysis::isVowel(char c) {
     }
 }*/
 
-// Получает поток данных и обрабатывает его
-void TextAnalysis::printingCorrectWords(std::iostream & inputStream) {
-    std::string line;
-    // Построчно считывает строки из потока
-    while (std::getline(inputStream, line)) {
-        std::stringstream lineStream(line);
-        std::string word;
-        // Считывание и обработка слов в каждой строке
-        while (lineStream >> word) {
-            if (isVowel(word[0]) && isVowel(word[word.size() - 1])) {
-                std::cout << word << " ";
-            }
-        }
-        std::cout << "\n";
+bool TextAnalysis::isVowel(char c) {
+    switch (c) {
+        case 'a':
+        case 'A':
+        case 'e':
+        case 'E':
+        case 'i':
+        case 'I':
+        case 'o':
+        case 'O':
+        case 'u':
+        case 'U':
+            return true;
+        default:
+            return false;
     }
+}
+
+// Получает поток данных и обрабатывает его
+void TextAnalysis::printingCorrectWords(std::iostream &inputStream) {
+    std::cout << "\nРезультат:\n";
+    std::string word;
+    while (inputStream >> word) {
+        if (isVowel(word[0]) && isVowel(word[word.size() - 1])) {
+            std::cout << word << " ";
+        }
+    }
+    std::cout << "\n";
 }
 
 void TextAnalysis::readFromConsole() {
@@ -67,20 +62,27 @@ void TextAnalysis::readFromConsole() {
     // Считывание инфорамции из консоли и создание из этого потока
     std::getline(std::cin, text, '$');
     std::stringstream stringStream(text);
-
-    std::cout << "\nРезультат: ";
+    std::cin.ignore();
     printingCorrectWords(stringStream);
 }
 
-void TextAnalysis::readFromFile() {
-    std::fstream file;
+void TextAnalysis::readFromFile(std::string fileName) {
+    if (!ends_with(fileName, ".txt")) {
+        throw MyException("Файл имеет неподдерживаемый тип, вводите имя файла с расширением .txt!\n");
+    }
 
-    file.open("input.txt", std::ios::in);
+    std::fstream file;
+    file.open(fileName, std::ios::in);
     if (!file.is_open()) {
         file.close();
         throw MyException("Файл не открылся!\n");
     }
+
     printingCorrectWords(file);
 
     file.close();
+}
+
+bool TextAnalysis::ends_with(const std::string &value, const std::string &ending) {
+    return std::equal(ending.rbegin(), ending.rend(), value.rbegin());
 }
