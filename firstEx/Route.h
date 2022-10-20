@@ -4,7 +4,7 @@
 
 #ifndef LAB2_ROUTE_H
 #define LAB2_ROUTE_H
-#include "safeInput.h"
+#include "../safeInput.h"
 
 class Route {
 private:
@@ -14,7 +14,7 @@ private:
 public:
     Route();
 
-    Route(std::string startPointOfTheRoute, std::string finalPointOfTheRoute, int numberOfRoute);
+    Route(const std::string& startPointOfTheRoute, const std::string& finalPointOfTheRoute, int numberOfRoute);
 
     ~Route();
 

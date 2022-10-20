@@ -6,6 +6,7 @@
 #define LAB2_LIST_H
 
 #include "Element.h"
+#include "../MyException.h"
 
 class List {
 private:
@@ -13,14 +14,22 @@ private:
     Element *last;
     int size;
 
-    Element *searchingForElementByIndex(int index);
+    void bubbleSort();
 
-    [[nodiscard]] bool isIndexCorrect(int index) const;
+    void swapRoutes(Route *route1, Route *route2);
+
+    [[nodiscard]] Element *searchingForElementByIndex(int index) const;
+
+    [[nodiscard]] bool isIndexIncorrect(int index) const;
 
 public:
     List();
 
     ~List();
+
+    [[nodiscard]] int getSize() const;
+
+    void displayElementByNumberOfRoute(int searchedNumberOfRoute) const;
 
     void editElementByIndex(Route *route, int index);
 
@@ -38,7 +47,7 @@ public:
 
     [[nodiscard]] bool isEmpty() const;
 
-    void displayList();
+    void displayList() const;
 };
 
 

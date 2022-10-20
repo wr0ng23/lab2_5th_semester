@@ -9,7 +9,7 @@ const std::string &Route::getStartPointOfTheRoute() const {
 }
 
 void Route::setStartPointOfTheRoute(const std::string &startPointOfTheRoute) {
-    Route::startPointOfTheRoute = startPointOfTheRoute;
+    this->startPointOfTheRoute = startPointOfTheRoute;
 }
 
 const std::string &Route::getFinalPointOfTheRoute() const {
@@ -17,7 +17,7 @@ const std::string &Route::getFinalPointOfTheRoute() const {
 }
 
 void Route::setFinalPointOfTheRoute(const std::string &finalPointOfTheRoute) {
-    Route::finalPointOfTheRoute = finalPointOfTheRoute;
+    this->finalPointOfTheRoute = finalPointOfTheRoute;
 }
 
 int Route::getNumberOfRoute() const {
@@ -25,7 +25,7 @@ int Route::getNumberOfRoute() const {
 }
 
 void Route::setNumberOfRoute(int numberOfRoute) {
-    Route::numberOfRoute = numberOfRoute;
+    this->numberOfRoute = numberOfRoute;
 }
 
 std::ostream &operator<<(std::ostream &os, const Route &route) {
@@ -54,7 +54,7 @@ Route::Route() {
     numberOfRoute = 0;
 }
 
-Route::Route(std::string startPointOfTheRoute, std::string finalPointOfTheRoute, int numberOfRoute) {
+Route::Route(const std::string& startPointOfTheRoute, const std::string& finalPointOfTheRoute, int numberOfRoute) {
     std::cout << "Вызван конструктор с параметрами класса Route\n";
     this->startPointOfTheRoute = startPointOfTheRoute;
     this->finalPointOfTheRoute = finalPointOfTheRoute;
