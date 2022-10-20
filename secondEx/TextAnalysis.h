@@ -14,8 +14,8 @@ private:
     static bool isVowel(char c);
     static void printingCorrectWords(std::iostream & stringStream);
     static bool ends_with(const std::string &value, const std::string &ending);
+    static bool isPunctuationMark(char c);
 public:
-    //static bool isPunctuationMark(char c);
     static void readFromConsole();
     static void readFromFile(std::string fileName);
 };

@@ -4,7 +4,7 @@
 
 #include "TextAnalysis.h"
 
-/*bool TextAnalysis::isPunctuationMark(char c) {
+bool TextAnalysis::isPunctuationMark(char c) {
     switch (c) {
         case ',':
         case '.':
@@ -12,19 +12,21 @@
         case ';':
         case '!':
         case '?':
-        case ')':
         case '(':
-        case '}':
+        case ')':
+        case '[':
+        case ']':
         case '{':
+        case '}':
+        case '<':
+        case '>':
         case '"':
         case '\'':
-        case ']':
-        case '[':
             return true;
         default:
             return false;
     }
-}*/
+}
 
 bool TextAnalysis::isVowel(char c) {
     switch (c) {
@@ -46,14 +48,49 @@ bool TextAnalysis::isVowel(char c) {
 
 // Получает поток данных и обрабатывает его
 void TextAnalysis::printingCorrectWords(std::iostream &inputStream) {
-    std::cout << "\nРезультат:\n";
     std::string word;
+    std::string resultString;
+
     while (inputStream >> word) {
-        if (isVowel(word[0]) && isVowel(word[word.size() - 1])) {
-            std::cout << word << " ";
+        //Проверка кончается и начинается ли слово с гласной, например: apple ...
+        bool firstCheck = isVowel(word[0]) && isVowel(word[word.size() - 1]);
+
+        //Та же проверка, только если слово содержит знак препинания в конце, например: apple, ...
+        bool secondCheck = isVowel(word[0]) && isVowel(word[word.size() - 2])
+                           && isPunctuationMark(word[word.size() - 1]);
+
+        // Если слово содержит знак препинания в начале, например: (apple ...
+        bool thirdCheck = isVowel(word[1]) && isVowel(word[word.size() - 1]) && isPunctuationMark(word[0]);
+
+        // Если слово содержит в начале и конце знак понктуации, например: (apple, ...
+        bool forthCheck = isVowel(word[1]) && isVowel(word[word.size() - 2]) && isPunctuationMark(word[0]) &&
+                          isPunctuationMark(word[word.size() - 1]);
+
+        // Переменная отвечающая за то, что слово подходит под условия
+        bool flag = false;
+        // Если слово подходит под условия и содержит в себе знаки припинания, слово парсится без них
+        if (firstCheck) {
+            flag = true;
+        } else if (secondCheck) {
+            word = word.substr(0, word.size() - 1);
+            flag = true;
+        } else if (thirdCheck) {
+            word = word.substr(1, word.size());
+            flag = true;
+        }
+        else if (forthCheck) {
+            word = word.substr(1, word.size() - 2);
+            flag = true;
+        }
+
+        // Если слово еще не разу не встречалось, оно добавляется в результирующую строку
+        if ((resultString.find(word) == std::string::npos) && flag) {
+            resultString.append(word + " ");
+            flag = false;
         }
     }
-    std::cout << "\n";
+
+    std::cout << "\nРезультат:\n" << resultString << "\n";
 }
 
 void TextAnalysis::readFromConsole() {
@@ -61,8 +98,9 @@ void TextAnalysis::readFromConsole() {
     std::string text;
     // Считывание инфорамции из консоли и создание из этого потока
     std::getline(std::cin, text, '$');
-    std::stringstream stringStream(text);
     std::cin.ignore();
+    std::stringstream stringStream(text);
+
     printingCorrectWords(stringStream);
 }
 
@@ -79,7 +117,6 @@ void TextAnalysis::readFromFile(std::string fileName) {
     }
 
     printingCorrectWords(file);
-
     file.close();
 }
 
