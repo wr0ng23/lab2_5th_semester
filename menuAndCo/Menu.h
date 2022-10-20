@@ -5,8 +5,8 @@
 #ifndef LAB2_MENU_H
 #define LAB2_MENU_H
 
-#include "firstEx/List.h"
-#include "secondEx/TextAnalysis.h"
+#include "../firstEx/List.h"
+#include "../secondEx/TextAnalysis.h"
 #include "checkingAccuracyOfTheInput.h"
 
 class Menu {

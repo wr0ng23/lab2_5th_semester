@@ -6,8 +6,8 @@
 #define LAB2_LIST_H
 
 #include "Element.h"
-#include "../MyException.h"
-#include "../checkingAccuracyOfTheInput.h"
+#include "../menuAndCo/MyException.h"
+#include "../menuAndCo/checkingAccuracyOfTheInput.h"
 
 class List {
 private:

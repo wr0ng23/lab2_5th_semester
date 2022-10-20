@@ -3,4 +3,4 @@ project(lab2)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(lab2 main.cpp firstEx/Route.cpp firstEx/Route.h safeInput.h firstEx/List.cpp firstEx/List.h firstEx/Element.cpp firstEx/Element.h MyException.cpp MyException.h secondEx/TextAnalysis.cpp secondEx/TextAnalysis.h Menu.cpp Menu.h checkingAccuracyOfTheInput.cpp checkingAccuracyOfTheInput.h)
+add_executable(lab2 main.cpp firstEx/Route.cpp firstEx/Route.h menuAndCo/safeInput.h firstEx/List.cpp firstEx/List.h firstEx/Element.cpp firstEx/Element.h menuAndCo/MyException.cpp menuAndCo/MyException.h secondEx/TextAnalysis.cpp secondEx/TextAnalysis.h menuAndCo/Menu.cpp menuAndCo/Menu.h menuAndCo/checkingAccuracyOfTheInput.cpp menuAndCo/checkingAccuracyOfTheInput.h)

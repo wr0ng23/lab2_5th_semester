@@ -7,7 +7,7 @@
 
 #include <fstream>
 #include <sstream>
-#include "../MyException.h"
+#include "../menuAndCo/MyException.h"
 
 class TextAnalysis {
 private:

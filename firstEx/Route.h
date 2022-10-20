@@ -4,7 +4,7 @@
 
 #ifndef LAB2_ROUTE_H
 #define LAB2_ROUTE_H
-#include "../safeInput.h"
+#include "../menuAndCo/safeInput.h"
 
 class Route {
 private:
